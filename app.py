@@ -88,7 +88,8 @@ def app(user_query):
     # could use OpenAI llm ? 
     llm = VertexAI(
         model_name='text-bison',
-        max_output_tokens=2048
+        max_output_tokens=2048,
+        temperature=0.6
     )
     # Alternative models:
     # llm = VertexAI(model_name='text-bison-32k')
@@ -142,7 +143,7 @@ def app(user_query):
         answer = "I'm sorry, but I couldn't find any relevant information to answer your question."
 
     print(answer)
-    return(answer)
+    return([answer, matches])
 
 # display(Markdown(answer))
 

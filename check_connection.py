@@ -1,6 +1,7 @@
 import asyncio
 import asyncpg
 from google.cloud.sql.connector import Connector
+
 from dotenv import load_dotenv
 import os
 
@@ -37,5 +38,4 @@ async def main():
         await conn.close()
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())

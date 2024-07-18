@@ -14,4 +14,9 @@ run """ gcloud config set project {project_id} """ *replace the project_id with 
 
 run """ streamlit run dashboard.py """ to run locally 
 
+
+## Roadmap
+
+7/17/24 - added context window to ask follow up questions.
+
 ### Credits to Moses Daudu for the notebook to get data, clean it, and organize the embeddings. 

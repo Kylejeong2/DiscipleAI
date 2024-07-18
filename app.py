@@ -11,8 +11,10 @@ from langchain import PromptTemplate
 import asyncpg
 from pgvector.asyncpg import register_vector
 
-def app(user_query):
+def app(user_query, context=None):
     print(f"received query: {user_query}")
+    if context:
+        print(f"context provided: {context}")
     load_dotenv()
 
     project_id = os.getenv("project_id")
@@ -104,9 +106,10 @@ def app(user_query):
     map_prompt = PromptTemplate(template=map_prompt_template, input_variables=["text"])
 
     combine_prompt_template = """
-                    You will be given a bible verse, some text
-                    and a question enclosed in double backticks(``).
-                    Based on the given text, answer the following
+                    You will be given a bible verse, some text,
+                    a question enclosed in double backticks(``),
+                    and optional context enclosed in triple backticks(```).
+                    Based on the given text and context (if provided), answer the following
                     question in as much detail as possible.
                     You may include the bible verse in your description, but it is not compulsory.
                     Do not repeat the bible verse as the answer.
@@ -115,16 +118,17 @@ def app(user_query):
                     Description:
                     ```{text}```
 
-
                     Question:
                     ``{user_query}``
 
+                    Context (if provided):
+                    ```{context}```
 
                     Answer:
                     """
 
     combine_prompt = PromptTemplate(
-        template=combine_prompt_template, input_variables=["text", "user_query"]
+        template=combine_prompt_template, input_variables=["text", "user_query", "context"]
     )
 
     docs = [Document(page_content=t) for t in matches]
@@ -137,7 +141,8 @@ def app(user_query):
         answer = chain.run(
             input_documents=docs,
             question=user_query,
-            user_query=user_query
+            user_query=user_query,
+            context=context
         )
     else:
         answer = "I'm sorry, but I couldn't find any relevant information to answer your question."

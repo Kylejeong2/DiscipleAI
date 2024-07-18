@@ -1,5 +1,6 @@
 import streamlit as st
 from app import app
+from generate_context import generate_context
 
 # Set page configuration
 st.set_page_config(page_title="Disciple AI", layout="wide")
@@ -16,8 +17,12 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+context = [] #start with no context
+currContext = "" #start with no current context
 # Accept user input
 if prompt := st.chat_input("What would you like to know about the Bible?"):
+    newContext = generate_context(currContext, context)
+    currContext = newContext
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     # Display user message in chat message container
@@ -27,12 +32,12 @@ if prompt := st.chat_input("What would you like to know about the Bible?"):
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = app(prompt)
-        st.markdown("### Answer")
-        st.markdown(response[0])
-        st.markdown("### Verses")
-        st.markdown(response[1])
-    
+            response = app(prompt, context=newContext)
+        # st.markdown("### Answer")
+        # st.markdown(response[0])
+        # st.markdown("### Verses")
+        # st.markdown(response[1])
+    context = [prompt, response[0]]
     # Add assistant response to chat history
     assistant_content = f"### Answer\n{response[0]}\n\n### Verses\n{response[1]}"
     st.session_state.messages.append({"role": "assistant", "content": assistant_content})

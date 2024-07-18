@@ -21,8 +21,8 @@ context = [] #start with no context
 currContext = "" #start with no current context
 # Accept user input
 if prompt := st.chat_input("What would you like to know about the Bible?"):
-    newContext = generate_context(currContext, context)
-    currContext = newContext
+    # newContext = generate_context(currContext, context)
+    # currContext = newContext
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     # Display user message in chat message container
@@ -32,11 +32,11 @@ if prompt := st.chat_input("What would you like to know about the Bible?"):
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = app(prompt, context=newContext)
-        # st.markdown("### Answer")
-        # st.markdown(response[0])
-        # st.markdown("### Verses")
-        # st.markdown(response[1])
+            response = app(prompt, context=None)
+        st.markdown("### Answer")
+        st.markdown(response[0])
+        st.markdown("### Verses")
+        st.markdown(response[1])
     context = [prompt, response[0]]
     # Add assistant response to chat history
     assistant_content = f"### Answer\n{response[0]}\n\n### Verses\n{response[1]}"

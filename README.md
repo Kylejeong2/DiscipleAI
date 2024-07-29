@@ -4,7 +4,7 @@ This is a simple AI chatbot that can answer questions about the Bible.
 
 ## Demo
 
-![Disciple AI Demo](public/videos/discipleaidemo.mov)
+![Disciple AI Demo](public/discipleaidemo.mov)
 
 
 ## Usage

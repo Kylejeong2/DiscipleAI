@@ -3,8 +3,8 @@
 This is a simple AI chatbot that can answer questions about the Bible. 
 
 ## Demo
+[![Watch the video](https://img.youtube.com/vi/nqfXXQzM2Yw/0.jpg)](https://www.youtube.com/watch?v=nqfXXQzM2Yw)
 
-[![Disciple AI Demo](public/discipleAIDemo.mov)](https://user-images.githubusercontent.com/Kylejeong2/DiscipleAI/public/discipleAIDemo.mov)
 
 ## Usage
 
